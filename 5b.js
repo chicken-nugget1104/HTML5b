@@ -1,4 +1,4 @@
-const version = 'v0.3.32'; // putting this up here so I can edit the text on the title screen more easily.
+const version = 'v0.3.3.2.1'; // putting this up here so I can edit the text on the title screen more easily.
 let canvas;
 let ctx;
 const cwidth = 960;
@@ -2397,7 +2397,9 @@ function myLevelsTextBoxes() {
 }
 
 function menuExitLevelCreator() {
-	menuScreen = 0;
+	if(Window.confirm("Are you sure you want to exit? Doing this will clear tiles in the build space.")) {
+		menuScreen = 0;
+	}
 }
 
 function menuExplore() {
@@ -2584,13 +2586,11 @@ function copySavedLevelpackString() {
 function exploreMoreByThisUser() {
 	cancelEditExploreLevel();
 	menuScreen = 8;
-	// getExploreUser(exploreLevelPageLevel.creator.id);
 	exploreUser = exploreLevelPageLevel.creator;
 	setExploreUserPage(0, 1).then(() => setExploreUserPage(1, 1))
 }
 
 function setExploreUserPage(type, page) {
-	// exploreLevelTitlesTruncated = new Array(8);
 	exploreUserPageNumbers[type] = page;
 	return getExploreUserPage(exploreUser.id, exploreUserPageNumbers[type], type, 0);
 }
@@ -2873,8 +2873,13 @@ function drawMenu() {
 		drawMenu0Button('NEW GAME', 665.55, 348.4, false, menuNewGame);
 	}
 	drawMenu0Button('CONTINUE GAME', 665.55, 393.05, levelProgress == 0, menuContGame);
-	drawMenu0Button('LEVEL CREATOR', 665.55, 437.7, false, menuLevelCreator);
-	drawMenu0Button('EXPLORE', 665.55, 482.5, false, menuExplore);
+	if (levelProgress > 5) {
+		drawMenu0Button('LEVEL CREATOR', 665.55, 437.7, false, menuLevelCreator);
+		drawMenu0Button('EXPLORE', 665.55, 482.5, false, menuExplore);
+	} else {
+		drawMenu0Button('LEVEL CREATOR', 665.55, 437.7, true, menuLevelCreator);
+		drawMenu0Button('EXPLORE', 665.55, 482.5, true, menuExplore);
+	}
 
 	// let started = true;
 	// if (bfdia5b.data.levelProgress == undefined || bfdia5b.data.levelProgress == 0) {
@@ -2933,7 +2938,6 @@ function drawLevelMap() {
 		ctx.fillText('x ' + coins, 477.95, 50.9);
 	} else {
 		ctx.font = 'bold 48px Helvetica';
-		// ctx.fillText(exploreLevelPageLevel.title, 55, 35);
 		let titleLineCount = wrapText((levelpackType === 0)?exploreLevelPageLevel.title:lcSavedLevelpacks['l' + lcCurrentSavedLevelpack].title, 50, 35, 500, 48).length;
 		if (levelpackType === 0) {
 			ctx.font = 'italic 21px Helvetica';
@@ -3487,8 +3491,7 @@ function drawCharacters(context) {
 
 				// If we're not bubble dying, draw the legs.
 				if (!(char[i].id == 5 && Math.floor(char[i].frame / 2) == 4)) {
-					// TODO: remove hard-coded numbers
-					// TODO: make the character's leg frames an array and loop through them here..... or just make them one variable instead of two. whichever one I feel like doing at the time ig.
+					// TODO: remove hard-coded numbers, make the character's leg frames an array and loop through them here..... or just make them one variable instead of two. whichever one I feel like doing at the time ig.
 					let legdire = char[i].legdire > 0 ? 1 : -1;
 					let legmat = [
 						{
@@ -5400,7 +5403,7 @@ function closeToEdgeX() {
 }
 
 function removeLCTiles() {
-	console.log('removeLCTiles');
+	// console.log('removeLCTiles');
 	// osctx3.clearRect(0, 0, osc3.width, osc3.height);
 	// let y = 0;
 	// while(y < levelHeight)
@@ -5664,14 +5667,12 @@ function drawLCCharInfo(i, y) {
 						}
 					}
 					if (drawingDeleteButtons) {
-						// ctx.fillStyle = '#ee3333';
 						drawRemoveButton(
 							665 + charInfoHeight + 100 - charInfoHeight,
 							y + charInfoHeight + diaInfoHeight * j,
 							diaInfoHeight,
 							3
 						);
-						// ctx.fillRect(665 + charInfoHeight + 100-charInfoHeight, y + charInfoHeight + diaInfoHeight * j, diaInfoHeight, diaInfoHeight);
 					}
 				} else if (
 					j > 0 &&
@@ -6114,8 +6115,6 @@ function resetLCChar(i) {
 	char[i].id = id;
 	char[i].x = char[i].px = +myLevelChars[1][i][1].toFixed(2) * 30;
 	char[i].y = char[i].py = +myLevelChars[1][i][2].toFixed(2) * 30;
-	// char[i].px = 70 + i * 40;
-	// char[i].py = 400 - i * 30;
 	char[i].charState = myLevelChars[1][i][3];
 	char[i].w = charD[id][0];
 	char[i].h = charD[id][1];
@@ -7217,57 +7216,9 @@ function mousedown(event) {
 
 	if (menuScreen == 5) {
 		if (_xmouse > 660) {
-			// for (let i = 0; i < 6; i++) {
-			// 	let y = i * 40;
-			// 	if (i > selectedTab) {
-			// 		y += 300;
-			// 	}
-			// 	if (_ymouse >= y && _ymouse < y + 40) {
-			// 		setSelectedTab(i);
-			// 		if (i == 3 && (selectedTile < 0 || selectedTile > tileCount)) {
-			// 			setTool(0);
-			// 			setSelectedTile(1);
-			// 		}
-			// 		break;
-			// 	}
-			// }
-
-			// if (selectedTab == 2) {
-			// 	let x = Math.floor((_xmouse - 660) / 60);
-			// 	y = Math.floor((_ymouse - 160) / 60);
-			// 	i = x + y * 5;
-			// 	if (i >= 0 && i < tileCount && (tool != 3 && tool != 2 || !blockProperties[i][9])) {
-			// 		setSelectedTile(i);
-			// 		if (i >= 1 && tool == 1) {
-			// 			setTool(0);
-			// 		}
-			// 	}
-			// } else {
-			// 	setSelectedTile(1000);
-			// }
 			clearRectSelect();
 		} else if (Math.abs(_ymouse - 510) <= 20 && Math.abs(_xmouse - 330) <= 300) {
 			// let i = Math.floor((_xmouse - 30) / 50);
-			// if (i != 8) {
-			// 	if (i >= 9) {
-			// 		i = i - 1;
-			// 	}
-			// 	if (i == 9) {
-			// 		undo();
-			// 	} else if (i == 10) {
-			// 		setUndo();
-			// 		clearMyLevel(1);
-			// 		updateLCtiles();
-			// 	} else {
-			// 		setTool(i);
-			// 		if(tool <= 3) {
-			// 			setSelectedTab(3);
-			// 			if ((tool == 3 || tool == 2) && blockProperties[selectedTile][9]) {
-			// 				setSelectedTile(1);
-			// 			}
-			// 		}
-			// 	}
-			// }
 		} else {
 			if (selectedTab == 2 && !_keysDown[32]) {
 				if (tool != 4) {
@@ -7309,9 +7260,6 @@ function mousedown(event) {
 							}
 						}
 						updateLCtiles();
-						// selectedTab = 2;
-						// setTool(0);
-						// setSelectedTile(myLevel[1][y][x]);
 					} else if (tool == 6) {
 						let sizeChange = 0;
 						if (closeToEdgeY() || levelHeight >= 2) {
@@ -7494,7 +7442,6 @@ function handlePaste(e) {
 			inputText += pastedData;
 		}
 	}
-	//canvas.setAttribute('contenteditable', true);
 }
 
 function setup() {
@@ -7801,7 +7748,6 @@ function draw() {
 			if (_keysDown[82] && wipeTimer == 0) {
 				wipeTimer = 1;
 				transitionType = 0;
-				// if (cutScene == 1) csBubble.gotoAndPlay(17);
 			}
 			locations[4] = 1000;
 			for (let i = 0; i < charCount; i++) {
@@ -8293,14 +8239,6 @@ function draw() {
 				}
 			}
 
-			// This is an easter egg I added for The Wiki Camp 2. You can ignore it.
-			if (currentLevel == 52 && onRect(_xmouse, _ymouse, 674, 142, 30, 30)) {
-				onButton = true;
-				if (mousePressedLastFrame) {
-					window.open('https://camp2.rectangle.zone/index.php?title=5b_Challenge_Crystal');
-				}
-			}
-
 			qTimer--;
 			x = -cameraX;
 			y = -cameraY;
@@ -8374,7 +8312,6 @@ function draw() {
 					let necessaryDeathsW = 100;
 					ctx.fillStyle = '#808080';
 					ctx.fillRect(660 + (cwidth - 660 - necessaryDeathsW) / 2, tabWindowY + 320, necessaryDeathsW, 25);
-					// ctx.fillStyle = '#ee3333';
 					drawMinusButton(660 + (cwidth - 660 - necessaryDeathsW) / 2 - 35, tabWindowY + 320, 25, 3);
 					if (
 						onRect(
@@ -8389,7 +8326,6 @@ function draw() {
 					) {
 						if (mouseIsDown && !pmouseIsDown) myLevelNecessaryDeaths++;
 					}
-					// ctx.fillStyle = '#33ee33';
 					drawAddButton(660 + (cwidth - 660 + necessaryDeathsW) / 2 + 10, tabWindowY + 320, 25, 3);
 					if (
 						onRect(
@@ -9768,7 +9704,6 @@ function draw() {
 					textBoxes[0][3].w = lcPopUpW - 30;
 					textBoxes[0][3].h = lcPopUpH - 80;
 					textBoxes[0][3].draw();
-					// levelLoadString = textBoxes[0][3].text;
 
 					ctx.font = '18px Helvetica';
 					drawSimpleButton('Save', confirmChangeLevelString, (cwidth - lcPopUpW) / 2 + lcPopUpW - 70, (cheight + lcPopUpH) / 2 - 40, 60, 30, 3, '#ffffff', '#00a0ff', '#40a0ff', '#40a0ff', {isOnPopUp:true});
@@ -10040,7 +9975,6 @@ function draw() {
 
 			ctx.font = '23px Helvetica';
 			drawSimpleButton('Share to Explore', sharePackToExplore, 188, 85, 200, 30, 3, '#ffffff', '#00a0ff', '#40a0ff', '#40a0ff', {alt:'Share levelpack to exlore'});
-			// ctx.drawImage(svgMyLevelsIcons[3], 188, 85);
 
 			if (levelpackCreatorRemovingLevels) {
 				ctx.font = '26px Helvetica';
@@ -10309,7 +10243,7 @@ function getExploreUserPage(id, p, t, s) {
 		});
 }
 
-const tokenLifespan = 600000; // milliseconds in 10 minutes
+const tokenLifespan = 600001; // milliseconds in 10 minutes
 
 async function refreshToken() {
 	// Checks if we need to refresh.
@@ -10368,7 +10302,6 @@ async function postExploreLevelOrPack(title, desc, data, isLevelpack=false) {
 		return;
 	}
 	levelAlreadySharedToExplore = true;
-	// requestAdded();
 
 	const body = {
 		access_token: getCookie('access_token'),
