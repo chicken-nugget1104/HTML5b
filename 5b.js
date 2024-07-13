@@ -3260,8 +3260,7 @@ function resetLevel() {
 		cLevelDialogueText = dialogueText[currentLevel];
 
 		if (currentLevel > 99) {
-			currentLevelDisplayName =
-				'B' + (currentLevel - 99).toString().padStart(2, '0') + '. ' + levelName[currentLevel];
+			currentLevelDisplayName = 'B' + (currentLevel - 99).toString().padStart(2, '0') + '. ' + levelName[currentLevel];
 		} else {
 			currentLevelDisplayName = (currentLevel + 1).toString().padStart(3, '0') + '. ' + levelName[currentLevel];
 		}
@@ -3407,13 +3406,9 @@ function drawCharacters(context) {
 						littleJump = 9 - Math.pow(qTimer - 4, 2);
 					}
 					context.translate(0, -littleJump);
-					// levelChar["char" + i]._x = char[i].x;
-					// levelChar["char" + i]._y = char[i].y - littleJump;
-					// if (i == HPRC2) {
-					// HPRCBubble.charImage._x = char[i].x;
-					// HPRCBubble.charImage._y = char[i].y - 78;
-					// }
-					// if (char[i].deathTimer >= 30) setTint(i);
+
+                                        // something
+					if (char[i].deathTimer >= 30) setTint(i);
 				}
 				char[i].justChanged--;
 			}
@@ -3493,8 +3488,7 @@ function drawCharacters(context) {
 				// If we're not bubble dying, draw the legs.
 				if (!(char[i].id == 5 && Math.floor(char[i].frame / 2) == 4)) {
 					// TODO: remove hard-coded numbers
-					// TODO: make the character's leg frames an array and loop through them here...
-					// ... or just make them one variable instead of two. whichever one I feel like doing at the time ig.
+					// TODO: make the character's leg frames an array and loop through them here..... or just make them one variable instead of two. whichever one I feel like doing at the time ig.
 					let legdire = char[i].legdire > 0 ? 1 : -1;
 					let legmat = [
 						{
@@ -3518,7 +3512,6 @@ function drawCharacters(context) {
 					let legf = legFrames[char[i].leg1frame];
 					if (legf.type == 'static') {
 						f = [legf.bodypart, legf.bodypart];
-						// f[i] = f[i][Math.max(char[i].legAnimationFrame[i], 0)%f[i].length];
 					} else if (legf.type == 'anim') {
 						if (legf.usesMats) {
 							f = [legf.bodypart, legf.bodypart];
@@ -3647,10 +3640,6 @@ function drawCharacters(context) {
 				char[i].poseTimer++;
 
 				// Hitboxes
-				// ctx.strokeStyle = HSVtoRGB((char[i].id*1.618033988749894)%1, 0.7, 0.8);
-				// ctx.strokeStyle = '#ff0000';
-				// ctx.lineWidth = 1;
-				// ctx.strokeRect(char[i].x-char[i].w, char[i].y-char[i].h, char[i].w*2, char[i].h);
 				context.restore();
 			}
 			if (!slowTintsEnabled && char[i].temp > 0 && char[i].temp < 50) {
@@ -3905,7 +3894,6 @@ function setBody(i) {
 		char[i].setFrame(Math.ceil(char[i].dire / 2) + 5);
 	} else if (!char[i].onob && !ifCarried(i)) {
 		char[i].setFrame(Math.ceil(char[i].dire / 2) + 3);
-		// let frame = Math.round(Math.min(4 - char[i].vy,15));
 	} else {
 		char[i].setFrame(char[i].dire - 1);
 	}
