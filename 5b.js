@@ -1,4 +1,4 @@
-const version = 'v0.3.3.2.1'; // putting this up here so I can edit the text on the title screen more easily.
+const version = 'v0.3.3.2.2'; // putting this up here so I can edit the text on the title screen more easily.
 let canvas;
 let ctx;
 const cwidth = 960;
@@ -3410,9 +3410,6 @@ function drawCharacters(context) {
 						littleJump = 9 - Math.pow(qTimer - 4, 2);
 					}
 					context.translate(0, -littleJump);
-
-                                        // something
-					if (char[i].deathTimer >= 30) setTint(i);
 				}
 				char[i].justChanged--;
 			}
