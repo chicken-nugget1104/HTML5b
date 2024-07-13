@@ -1,4 +1,4 @@
-const version = 'v0.3.31'; // putting this up here so I can edit the text on the title screen more easily.
+const version = 'v0.3.32'; // putting this up here so I can edit the text on the title screen more easily.
 let canvas;
 let ctx;
 const cwidth = 960;
@@ -1959,8 +1959,6 @@ let lcMessageText = '';
 const lcZoomFactor = 2;
 let lcZoom = lcZoomFactor;
 let lcPan = [0,0];
-// const exploreTabNames = ['Featured', 'New', 'Top', '🔍'];
-// const exploreTabWidths = [190, 115, 115, 45];
 const exploreTabNames = ['Levels', 'Levelpacks','Search'];
 const exploreTabWidths = [125, 200, 125];
 let power = 1;
@@ -2151,9 +2149,7 @@ let menu2_3ButtonClicked = -1;
 let levelButtonClicked = -1;
 let showingNewGame2 = false;
 let showingExploreNewGame2 = false;
-
 let musicSound = new Audio('data/the fiber 16x loop.wav');
-// musicSound.addEventListener('canplaythrough', event => {incrementCounter();});
 
 // Creates an image object was a base64 src.
 function createImage(base64) {
@@ -2474,8 +2470,6 @@ function gotoExploreLevelPage(locOnPage) {
 	}
 	previousMenuExplore = menuScreen;
 	menuScreen = 7;
-	// We already have this data, so we don't need to load it again.
-	// getExploreLevel(explorePageLevels[locOnPage].id);
 }
 
 function menuExploreLevelPageBack() {
@@ -2537,7 +2531,6 @@ function playExploreLevel(continueGame=false) {
 		menuScreen = 2;
 		playingLevelpack = true;
 		levelpackType = 0;
-		// playMode = 0;
 	}
 }
 
@@ -7802,7 +7795,7 @@ function draw() {
 						}
 						qPress = true;
 					} else qPress = false;
-					if (_keysDown[32]) {
+					if (_keysDown[32] || _keysDown[88]) {
 						if (
 							(char[control].onob || char[control].submerged == 3) &&
 							char[control].landTimer > 2 &&
