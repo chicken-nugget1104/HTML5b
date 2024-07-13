@@ -1,4 +1,4 @@
-const version = 'v0.3.3'; // putting this up here so I can edit the text on the title screen more easily.
+const version = 'v0.3.31'; // putting this up here so I can edit the text on the title screen more easily.
 let canvas;
 let ctx;
 const cwidth = 960;
@@ -2487,7 +2487,6 @@ function menuExploreLevelPageBack() {
 function menuExploreBack() {
 	menuScreen = 6;
 	exploreTextBoxes();
-	// setExplorePage(1);
 }
 
 function confirmChangeLevelString() {
@@ -2893,8 +2892,6 @@ function drawMenu() {
 function drawLevelMapBorder() {
 	// For security reasons, you can not draw images from svg files to a canvas.
 	// So I have to draw the border image manually with masking and stuff.
-	// https://stackoverflow.com/questions/18379818/canvas-image-masking-overlapping
-
 	// It might be better to use a path object here instead of hard-coding it.
 	ctx.save();
 	ctx.beginPath();
@@ -2922,7 +2919,6 @@ function drawLevelMapBorder() {
 	drawMenu2_3Button(3, 587, 469, setQual);
 	drawMenu2_3Button(2, 705, 469, toggleSound);
 	drawMenu2_3Button(1, 823, 469, menu2Back);
-	//setQual
 }
 
 function drawLevelMap() {
