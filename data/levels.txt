@@ -26,7 +26,7 @@ Time to explore
 00H Oh, I know!  I'll look through my journal entries!   After all, I am a journal.  So, let's see...   five minutes ago, I...
 00S ...got eaten by Evil Leafy? WHAT?  That doesn't make any sense!
 00S Well, I guess I'll go look for my fellow FreeSmarters to get a sense of what's going on.
-99S Use the arrow keys to move and press the space bar to jump.
+99S Use the arrow keys to move and press the space bar or X to jump.
 000000
 
 First danger
