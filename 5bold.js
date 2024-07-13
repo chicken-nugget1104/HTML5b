@@ -1,4 +1,19 @@
 const version = 'v0.3.3'; // putting this up here so I can edit the text on the title screen more easily.
+
+/* For testing the performance of any block of code. It averages every 100 runs and prints to the console. To use, simply place the following around the code block you'd like to test:
+performanceTest(()=>{
+}); */
+// let performanceTestTimes = [];
+// function performanceTest(action) {
+// 	let performanceTestValue = performance.now();
+// 	action();
+// 	performanceTestTimes.push(performance.now() - performanceTestValue);
+// 	if (performanceTestTimes.length >= 100) {
+// 		console.log(performanceTestTimes.reduce((a, b) => a + b) / performanceTestTimes.length);
+// 		performanceTestTimes = [];
+// 	}
+// }
+
 let canvas;
 let ctx;
 const cwidth = 960;
@@ -36,6 +51,7 @@ let _frameCount = 0;
 let qTimer = 0;
 let inputText = '';
 let textAfterCursorAtClick = '';
+// let controlOrCommandPress = false;
 
 let levelsString = '';
 let levelCount = 53;
@@ -132,7 +148,8 @@ function getSavedGame() {
 		clearVars();
 	} else {
 		levelProgress = parseInt(bfdia5b.getItem('levelProgress'));
-		bonusProgress = parseInt(bfdia5b.getItem('bonusProgress'));
+		// bonusProgress = parseInt(bfdia5b.getItem('bonusProgress'));
+		bonusProgress = 0;
 		deathCount = parseInt(bfdia5b.getItem('deathCount'));
 		timer = parseFloat(bfdia5b.getItem('timer'));
 		gotCoin = new Array(levelCount);
@@ -142,12 +159,12 @@ function getSavedGame() {
 			gotCoin[i] = gotCoinRaw[i] === 'true';
 			if (gotCoin[i]) coins++;
 		}
-		bonusesCleared = new Array(33);
-		let bonusesClearedRaw = bfdia5b.getItem('bonusesCleared').split(',');
-		for (let i = 0; i < 33; i++) {
-		 	bonusesCleared[i] = bonusesClearedRaw[i] === 'true';
-		}
-		// bonusesCleared = new Array(33).fill(false);
+		// bonusesCleared = new Array(33);
+		// let bonusesClearedRaw = bfdia5b.getItem('bonusesCleared').split(',');
+		// for (let i = 0; i < 33; i++) {
+		// 	bonusesCleared[i] = bonusesClearedRaw[i] === 'true';
+		// }
+		bonusesCleared = new Array(33).fill(false);
 	}
 }
 getSavedGame();
@@ -2173,6 +2190,13 @@ function getVB(base64) {
 
 async function loadingScreen() {
 	// Zoom fix on Windows.
+	// https://danreynolds.ca/tech/2017/10/15/Variable-Browser-Zoom/
+	// On Firefox setting document.body.style.zoom doesn't actually zoom anything in.
+	// We don't really need to worry about the dpi scaling on Firefox though,
+	// and it just so happens that "document.body.style.zoom" is undefined
+	// by default on Firefox, and on Chrome and Safari it's an empty string by default.
+	// So we'll only want to try rescaling if document.body.style.zoom is
+	// an empty string when the page is loaded.
 	pixelRatio = window.devicePixelRatio;
 	if (document.body.style.zoom === '') {
 		if (pixelRatio > 1 && pixelRatio < 2) {
@@ -2980,10 +3004,10 @@ function drawLevelMap() {
 		else if (gotCoin[i]) color = 4;
 		else if (levelProgress == i) color = 2;
 		else if (levelProgress > i) color = 3;
-		else if (i > 99 && i < bonusProgress + 100) {
-		 	if (!bonusesCleared[i - 100]) color = 2;
-				else color = 3;
-		}
+		// else if (i > 99 && i < bonusProgress + 100) {
+		// 	if (!bonusesCleared[i - 100]) color = 2;
+		// 	else color = 3;
+		// }
 		let text = '';
 		if (!playingLevelpack && i >= 100) text = 'B' + (i - 99).toString().padStart(2, '0');
 		else text = (i + 1).toString().padStart(3, '0');
@@ -3056,6 +3080,7 @@ function wrapText(text, x, y, maxWidth, lineHeight, drawText = true) {
 	return lines;
 }
 
+// https://stackoverflow.com/questions/10508988/html-canvas-text-overflow-ellipsis
 function binarySearch({max, getValue, match}) {
 	let min = 0;
 
@@ -7463,6 +7488,7 @@ function keydown(event) {
 		}
 	}
 
+	// if (event.metaKey || event.ctrlKey) controlOrCommandPress = true;
 	if (menuScreen == 5 && !lcPopUp && !editingTextBox) {
 		// tool shortcuts
 		if (_xmouse < 660 && selectedTab == 2) {
@@ -7497,6 +7523,7 @@ function keydown(event) {
 
 function keyup(event) {
 	_keysDown[event.keyCode || event.charCode] = false;
+	// if (event.metaKey || event.ctrlKey) controlOrCommandPress = false;
 }
 
 // https://stackoverflow.com/questions/2176861/javascript-get-clipboard-data-on-paste-event-cross-browser
@@ -7659,7 +7686,7 @@ function draw() {
 					if (playMode != 2 && gotThisCoin && !gotCoin[currentLevel]) {
 						gotCoin[currentLevel] = true;
 						coins++;
-						bonusProgress = Math.floor(coins * 0.33);
+						// bonusProgress = Math.floor(coins * 0.33);
 					}
 					timer += getTimer() - levelTimer2;
 					if (playMode == 0) {
@@ -7675,9 +7702,9 @@ function draw() {
 							exitTestLevel();
 						} else {
 							exitLevel();
-							if (currentLevel > 99) {
-							 	bonusesCleared[currentLevel - 100] = true;
-							}
+							// if (currentLevel > 99) {
+							// 	bonusesCleared[currentLevel - 100] = true;
+							// }
 						}
 					}
 					saveGame();
