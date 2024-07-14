@@ -2783,7 +2783,7 @@ function drawLevelButton(text, x, y, id, color) {
 		}
 		if (!mouseIsDown && levelButtonClicked === id) {
 			levelButtonClicked = -1;
-			if (id <= levelProgress) { // || (id > 99 && id < bonusProgress + 100)
+			if (id <= levelProgress || (id > 99 && id < bonusProgress + 100)) {
 				playLevel(id);
 				whiteAlpha = 100;
 			}
@@ -2881,18 +2881,13 @@ function drawMenu() {
 		drawMenu0Button('NEW GAME', 665.55, 348.4, false, menuNewGame);
 	}
 	drawMenu0Button('CONTINUE GAME', 665.55, 393.05, levelProgress == 0, menuContGame);
-	if (levelProgress > 5) {
+	if (levelProgress > 6) {
 		drawMenu0Button('LEVEL CREATOR', 665.55, 437.7, false, menuLevelCreator);
 		drawMenu0Button('EXPLORE', 665.55, 482.5, false, menuExplore);
 	} else {
 		drawMenu0Button('LEVEL CREATOR', 665.55, 437.7, true, menuLevelCreator);
 		drawMenu0Button('EXPLORE', 665.55, 482.5, true, menuExplore);
 	}
-
-	// let started = true;
-	// if (bfdia5b.data.levelProgress == undefined || bfdia5b.data.levelProgress == 0) {
-	//    started = false;
-	// }
 }
 
 function drawLevelMapBorder() {
@@ -9090,7 +9085,6 @@ function draw() {
 					if (drawSimpleButton('Copy String', copyLevelString, 675, tabWindowY + 10, 130, 30, 3, '#ffffff', '#404040', '#666666', '#555555').hover) copyButton = 1;
 					drawSimpleButton('Load String', openLevelLoader, 815, tabWindowY + 10, 130, 30, 3, '#ffffff', '#404040', '#666666', '#555555');
 					drawSimpleButton('Test Level', testLevelCreator, 675, tabWindowY + 50, 130, 30, 3, '#ffffff', '#404040', '#666666', '#555555');
-					// if (enableExperimentalFeatures) {
 					let isNew = lcCurrentSavedLevel==-1;
 					if (!isNew) ctx.font = '18px Helvetica';
 					drawSimpleButton(isNew?'Save Level':'Save Changes', saveLevelCreator, 675, tabWindowY + 90, 130, 30, isNew?3:5, '#ffffff', '#404040', '#666666', '#555555', {enabled:lcChangesMade});
@@ -9098,11 +9092,9 @@ function draw() {
 					drawSimpleButton('Save Copy', saveLevelCreatorCopy, 815, tabWindowY + 90, 130, 30, 3, '#ffffff', '#404040', '#666666', '#555555', {enabled:!isNew});
 					drawSimpleButton('New Blank Level', resetLevelCreator, 675, tabWindowY + 130, 270, 30, 3, '#ffffff', '#404040', '#666666', '#555555');
 					drawSimpleButton('My Levels', menuMyLevels, 675, tabWindowY + 170, 270, 30, 3, '#ffffff', '#404040', '#666666', '#555555');
-					// }
 
 					drawSimpleButton('Share to Explore', shareToExplore, 675, tabWindowY + 210, 270, 30, 3, '#ffffff', '#404040', '#666666', '#555555');
 					drawMenu0Button('EXIT', 846, cheight - 50, false, menuExitLevelCreator, 100);
-					// drawMenu2_3Button(0, 837.5, 486.95, menuExitLevelCreator);
 					break;
 			}
 
@@ -9295,21 +9287,6 @@ function draw() {
 			}
 			ctx.drawImage(osc5, 0, 0, 660, 480);
 			osctx5.restore();
-			// else if (tool == 6 || tool == 7) {
-			// 	levelCreator.rectSelect.clear();
-			// }
-
-			// for (let i = 0; i < 6; i++) {
-			// 	y = i * 40;
-			// 	if (i > selectedTab) {
-			// 		y += 300;
-			// 	}
-			// 	if (Math.abs(levelCreator.sideBar["tab" + (i + 1)]._y - y) < 0.5) {
-			// 		levelCreator.sideBar["tab" + (i + 1)]._y = y;
-			// 	} else {
-			// 		levelCreator.sideBar["tab" + (i + 1)]._y += (y - levelCreator.sideBar["tab" + (i + 1)]._y) * 0.2;
-			// 	}
-			// }
 
 			if (lcPopUp && !lcPopUpNextFrame) {
 				if (lcPopUpType == 0) {
@@ -9426,7 +9403,6 @@ function draw() {
 				});
 				let msgWidth = Math.max(...lcMessageLines);
 				let msgHeight = 25 * lcMessageLines.length + 5;
-				// let msgWidth = ctx.measureText(lcMessageText).width+10;
 				ctx.fillRect((cwidth - msgWidth) / 2, (cheight - 30) / 2, msgWidth, msgHeight);
 				ctx.fillStyle = '#000000';
 				linebreakText(lcMessageText, cwidth / 2, cheight / 2, 25);
@@ -9542,7 +9518,6 @@ function draw() {
 			}
 
 			drawMenu2_3Button(1, 837.5, 486.95, menu2Back);
-			// if (enableExperimentalFeatures) drawMenu2_3Button(2, 10, 486.95, logInExplore);
 			if (loggedInExploreUser5beamID === -1) {
 				drawMenu0Button('LOG IN', 540, 20, false, logInExplore, 120);
 			} else {
@@ -9728,7 +9703,6 @@ function draw() {
 			ctx.fillStyle = '#ffffff';
 			ctx.font = 'bold 36px Helvetica';
 			ctx.fillText(exploreUser.username, 10, 60);
-
 			ctx.font = '21px Helvetica';
 
 			if (exploreLoading) {
@@ -9772,10 +9746,17 @@ function draw() {
 			break;
 
 		case 9:
+			// Settings
+			ctx.textBaseline = 'top';
+			ctx.textAlign = 'left';
+			ctx.fillStyle = '#ffffff';
+			ctx.font = 'bold 36px Helvetica';
+			ctx.fillText("OPTIONS", 10, 60);
+			ctx.font = '21px Helvetica';
+
 			// Options menu
 			ctx.fillStyle = '#666666';
 			ctx.fillRect(0, 0, cwidth, cheight);
-
 			ctx.textBaseline = 'top';
 			ctx.font = '26px Helvetica';
 
