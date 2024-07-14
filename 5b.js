@@ -1,4 +1,4 @@
-const version = 'v0.3.3.2.3'; // putting this up here so I can edit the text on the title screen more easily.
+const version = 'v0.3.3.2.4'; // putting this up here so I can edit the text on the title screen more easily.
 let canvas;
 let ctx;
 const cwidth = 960;
@@ -4682,6 +4682,11 @@ function endDeath(i) {
 	deathCount++;
 	saveGame();
 	if (i == control) changeControl();
+
+	// Check if charCount is 0 or 1, if true, reset the level
+	if (charCount === 0 || charCount === 1) {
+		resetLevel();
+	}
 }
 
 function bounce(i) {
@@ -6900,8 +6905,6 @@ function drawExploreLevel(x, y, i, levelType, pageType) {
 	}
 
 	ctx.fillRect(x, y, 208, 155);
-	// ctx.fillStyle = '#cccccc';
-	// ctx.fillRect(x+8, y+8, 192, 108);
 	if (levelType == 0) ctx.drawImage(thumbs[i], x + 8, y + 8, 192, 108);
 
 	ctx.fillStyle = '#ffffff';
