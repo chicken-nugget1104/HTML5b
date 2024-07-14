@@ -1,4 +1,4 @@
-const version = 'v0.3.3.2.2'; // putting this up here so I can edit the text on the title screen more easily.
+const version = 'v0.3.3.2.3'; // putting this up here so I can edit the text on the title screen more easily.
 let canvas;
 let ctx;
 const cwidth = 960;
@@ -82,7 +82,8 @@ let screenShake = true;
 let screenFlashes = true;
 let frameRateThrottling = true;
 let slowTintsEnabled = true;
-let optionText = ['Screen Shake','Screen Flashes','Quirks Mode','Experimental Features','Frame Rate Throttling', 'Slow Tints'];
+let onScreenTimerEnabled = true;
+let optionText = ['Screen Shake','Screen Flashes','Quirks Mode','Experimental Features','Frame Rate Throttling', 'Slow Tints','On Screen Timer'];
 let levelAlreadySharedToExplore = false;
 let lcSavedLevels;
 let nextLevelId;
@@ -154,7 +155,7 @@ getSavedGame();
 getSavedSettings();
 
 function saveSettings() {
-	bfdia5b.setItem('settings', JSON.stringify([screenShake, screenFlashes, quirksMode, enableExperimentalFeatures, frameRateThrottling, slowTintsEnabled]));
+	bfdia5b.setItem('settings', JSON.stringify([screenShake, screenFlashes, quirksMode, enableExperimentalFeatures, frameRateThrottling, slowTintsEnabled, onScreenTimerEnabled]));
 }
 
 function getSavedSettings() {
@@ -168,6 +169,7 @@ function getSavedSettings() {
 		enableExperimentalFeatures = settingsArray[3];
 		frameRateThrottling = settingsArray[4];
 		slowTintsEnabled = settingsArray[5];
+		onScreenTimerEnabled = settingsArray[6];
 	}
 }
 
@@ -356,6 +358,18 @@ function loadLevels() {
 		mdao2 += 100000 * charAt(0) + 10000 * charAt(1) + 1000 * charAt(2) + 100 * charAt(3) + 10 * charAt(4) + charAt(5);
 		mdao[i] = mdao2;
 		levelStart += 8;
+
+		// Timer
+		if (onScreenTimerEnabled) {
+			const timerElement = document.getElementById('timer');
+			timerElement.style.display = 'block';
+			let startTime = Date.now();
+
+			setInterval(() => {
+				let elapsedTime = Date.now() - startTime;
+				timerElement.innerText = `Time: ${(elapsedTime / 1000).toFixed(2)}`;
+			}, 100); // Update timer every 100ms
+		}
 	}
 }
 
@@ -5022,10 +5036,6 @@ function mouseOnGrid() {
 }
 
 function resetLevelCreator() {
-	// _root.attachMovie("levelCreator","levelCreator",0,{_x:0,_y:0});
-	// levelCreator.createEmptyMovieClip("grid",100);
-	// levelCreator.createEmptyMovieClip("tiles",98);
-	// levelCreator.createEmptyMovieClip("rectSelect",99);
 	lcCurrentSavedLevel = -1;
 	lcChangesMade = false;
 	levelAlreadySharedToExplore = false;
@@ -9799,6 +9809,9 @@ function draw() {
 						break;
 					case 5:
 						thisOptionValue = slowTintsEnabled;
+						break;
+					case 6:
+						thisOptionValue = onScreenTimerEnabled;
 				}
 				ctx.fillStyle = thisOptionValue?'#00ff00':'#ff0000';
 				ctx.fillText(thisOptionValue?'on':'off', 615, y+2);
@@ -9824,6 +9837,9 @@ function draw() {
 								break;
 							case 5:
 								slowTintsEnabled = !slowTintsEnabled;
+								break;
+							case 6:
+								onScreenTimerEnabled = !onScreenTimerEnabled;
 								break;
 						}
 					}
