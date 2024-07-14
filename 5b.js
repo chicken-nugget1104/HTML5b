@@ -1,4 +1,4 @@
-const version = 'v0.3.3.2.5'; // putting this up here so I can edit the text on the title screen more easily.
+const version = 'v0.3.3.2.6'; // putting this up here so I can edit the text on the title screen more easily.
 let canvas;
 let ctx;
 const cwidth = 960;

@@ -51,7 +51,7 @@ First danger
 /////////////1111111111111111///
 01,03.50,11.00,10
 01
-99S Before you make that perilous leap, remember that you can press 'R' to reset the level!
+99S Before you make that perilous leap, remember that you can press 'R' to reset the level or if you die it will auto-reset!
 000000
 
 Pillar
