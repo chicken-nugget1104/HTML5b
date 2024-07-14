@@ -1,4 +1,4 @@
-const version = 'v0.3.3.2.6'; // putting this up here so I can edit the text on the title screen more easily.
+const version = 'v0.3.3.3'; // putting this up here so I can edit the text on the title screen more easily.
 let canvas;
 let ctx;
 const cwidth = 960;
@@ -5853,16 +5853,9 @@ function drawLCCharInfo(i, y) {
 			}
 		}
 	}
-	// if (charDropdown == i) {
-	// 	if (mouseIsDown) {
-	// 		charDropdown = -1;
-	// 	}
-	// }
 }
 
 function drawLCDiaInfo(i, y) {
-	// ctx.fillStyle = '#626262';
-	// ctx.fillRect(665, y, 240, diaInfoHeight*myLevelDialogue[1][i].linecount);
 	ctx.fillStyle = '#808080';
 	ctx.fillRect(665, y, diaInfoHeight * 3, diaInfoHeight * myLevelDialogue[1][i].linecount);
 	ctx.fillStyle = '#ffffff';
@@ -8852,12 +8845,10 @@ function draw() {
 
 				case 3:
 					// Background
-					// let j = 0;
 					let bgpr = 2;
 					let bgw = 96;
 					let bgh = 54;
 					let bgdist = 110;
-					// let h = _frameCount;
 					ctx.save();
 					ctx.translate(0, -bgsTabScrollBar);
 					for (var i = 0; i < imgBgs.length; i++) {
@@ -8895,12 +8886,6 @@ function draw() {
 								updateLCtiles();
 							}
 						}
-						// ctx.drawImage(imgBgs[i],
-						// 	660 + (bgdist-bgw) + (i%bgpr)*bgdist,
-						// 	(selectedTab+1)*tabHeight + (bgdist-bgh) + Math.floor(i/bgpr)*bgdist,
-						// 	bgw,
-						// 	bgh
-						// );
 					}
 					ctx.drawImage(osc2, 660, tabWindowY, osc2.width / pixelRatio, osc2.height / pixelRatio);
 					ctx.restore();
@@ -8975,12 +8960,6 @@ function draw() {
 					}
 					ctx.fillStyle = '#a0a0a0';
 					ctx.fillRect(cwidth - 10, scrollBarY, 10, scrollBarH);
-					// ctx.save();
-					// ctx.translate(0, -diaTabScrollBar);
-					// ctx.textAlign = 'left';
-					// ctx.textBaseline = 'middle';
-					// ctx.font = '20px Helvetica';
-					//myLevelDialogue[1][i].linecount
 					dialogueTabCharHover = [-1,0];
 					let diaInfoY = (selectedTab + 1) * tabHeight + 5 - diaTabScrollBar;
 					for (let i = 0; i < myLevelDialogue[1].length; i++) {
@@ -8991,8 +8970,6 @@ function draw() {
 						drawLCDiaInfo(i, diaInfoY);
 						if (i >= myLevelDialogue[1].length) break;
 						diaInfoY += diaInfoHeight * myLevelDialogue[1][i].linecount + 5;
-						// ctx.fillStyle = '#000000';
-						// ctx.fillText(myLevelChars[1][i], 660, 60+i*20);
 					}
 					addButtonPressed = false;
 					if (!lcPopUp && onRect(_xmouse,_ymouse,660 + 5,cheight - (tabNames.length - selectedTab - 1) * tabHeight - 20,15,15)) {
@@ -9248,7 +9225,6 @@ function draw() {
 
 			if (selectedTab == 2 && mouseOnGrid()) {
 				if (tool == 6) {
-					// levelCreator.rectSelect.clear();
 					let y2;
 					let y3;
 					osctx5.lineWidth = (2 * scale) / 9;
@@ -9266,7 +9242,6 @@ function draw() {
 					osctx5.lineTo(330 + (scale * levelWidth) / 2, 240 - (scale * levelHeight) / 2 + scale * (y2 + y3));
 					osctx5.stroke();
 				} else if (tool == 7) {
-					// levelCreator.rectSelect.clear();
 					let x2;
 					let x3;
 					osctx5.lineWidth = (2 * scale) / 9;
