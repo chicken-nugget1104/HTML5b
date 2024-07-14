@@ -358,18 +358,6 @@ function loadLevels() {
 		mdao2 += 100000 * charAt(0) + 10000 * charAt(1) + 1000 * charAt(2) + 100 * charAt(3) + 10 * charAt(4) + charAt(5);
 		mdao[i] = mdao2;
 		levelStart += 8;
-
-		// Timer
-		if (onScreenTimerEnabled) {
-			const timerElement = document.getElementById('timer');
-			timerElement.style.display = 'block';
-			let startTime = Date.now();
-
-			setInterval(() => {
-				let elapsedTime = Date.now() - startTime;
-				timerElement.innerText = `Time: ${(elapsedTime / 1000).toFixed(2)}`;
-			}, 100); // Update timer every 100ms
-		}
 	}
 }
 
