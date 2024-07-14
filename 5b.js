@@ -362,14 +362,7 @@ function loadLevels() {
 
 		// Timer
 		if (onScreenTimerEnabled) {
-			const timerElement = document.getElementById('timer');
-			timerElement.style.display = 'block';
-			let startTime = Date.now();
-
-			setInterval(() => {
-				let elapsedTime = Date.now() - startTime;
-				timerElement.innerText = `Time: ${(elapsedTime / 1000).toFixed(2)}`;
-			}, 100); // Update timer every 100ms
+			console.log("Timer goes here");
 		}
 	}
 }
