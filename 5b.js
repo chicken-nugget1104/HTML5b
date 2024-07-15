@@ -1,4 +1,4 @@
-const version = 'v0.3.3.4'; // putting this up here so I can edit the text on the title screen more easily.
+const version = 'v0.3.3.5'; // putting this up here so I can edit the text on the title screen more easily.
 let canvas;
 let ctx;
 const cwidth = 960;
@@ -9665,79 +9665,76 @@ function draw() {
 			break;
 
 		case 9:
-			// Settings
+			// Function to draw text with shadow
+			function drawTextWithShadow(text, x, y, color, fontSize) {
+				ctx.fillStyle = '#000000';
+				ctx.fillText(text, x + 2, y + 2); // Shadow
+				ctx.fillStyle = color;
+				ctx.font = fontSize + 'px Helvetica';
+				ctx.fillText(text, x, y);
+			}
+
+			// Settings title
 			ctx.textBaseline = 'top';
 			ctx.textAlign = 'left';
 			ctx.fillStyle = '#ffffff';
 			ctx.font = 'bold 36px Helvetica';
-			ctx.fillText("OPTIONS", 10, 60);
-			ctx.font = '21px Helvetica';
+			drawTextWithShadow("OPTIONS", 10, 60, '#ffffff', 36);
 
-			// Options menu
-			ctx.fillStyle = '#666666';
+			// Options menu background with gradient
+			let gradient = ctx.createLinearGradient(0, 0, 0, cheight);
+			gradient.addColorStop(0, '#444444');
+			gradient.addColorStop(1, '#222222');
+			ctx.fillStyle = gradient;
 			ctx.fillRect(0, 0, cwidth, cheight);
+
+			// Draw options
 			ctx.textBaseline = 'top';
 			ctx.font = '26px Helvetica';
-
 			for (var i = 0; i < optionText.length; i++) {
-				let y = i*50 + 150;
+				let y = i * 50 + 150;
+				
+				// Option rectangle with border
 				ctx.fillStyle = '#444444';
 				ctx.fillRect(590, y, 50, 28);
+				ctx.strokeStyle = '#ffffff';
+				ctx.lineWidth = 2;
+				ctx.strokeRect(590, y, 50, 28);
+
+				// Option text
 				ctx.fillStyle = '#ffffff';
 				ctx.textAlign = 'right';
-				ctx.fillText(optionText[i], 580, y+2);
+				drawTextWithShadow(optionText[i], 580, y + 2, '#ffffff', 26);
+
+				// Option value
 				ctx.textAlign = 'center';
 				let thisOptionValue;
 				switch (i) {
-					case 0:
-						thisOptionValue = screenShake;
-						break;
-					case 1:
-						thisOptionValue = screenFlashes;
-						break;
-					case 2:
-						thisOptionValue = quirksMode;
-						break;
-					case 3:
-						thisOptionValue = enableExperimentalFeatures;
-						break;
-					case 4:
-						thisOptionValue = frameRateThrottling;
-						break;
-					case 5:
-						thisOptionValue = slowTintsEnabled;
-						break;
-					case 6:
-						thisOptionValue = onScreenTimerEnabled;
+					case 0: thisOptionValue = screenShake; break;
+					case 1: thisOptionValue = screenFlashes; break;
+					case 2: thisOptionValue = quirksMode; break;
+					case 3: thisOptionValue = enableExperimentalFeatures; break;
+					case 4: thisOptionValue = frameRateThrottling; break;
+					case 5: thisOptionValue = slowTintsEnabled; break;
+					case 6: thisOptionValue = onScreenTimerEnabled; break;
 				}
-				ctx.fillStyle = thisOptionValue?'#00ff00':'#ff0000';
-				ctx.fillText(thisOptionValue?'on':'off', 615, y+2);
+				ctx.fillStyle = thisOptionValue ? '#00ff00' : '#ff0000';
+				drawTextWithShadow(thisOptionValue ? 'on' : 'off', 615, y + 2, thisOptionValue ? '#00ff00' : '#ff0000', 26);
 
+				// Highlight option on hover
 				if (onRect(_xmouse, _ymouse, 590, y, 50, 28)) {
 					onButton = true;
+					ctx.strokeStyle = '#ffff00';
+					ctx.strokeRect(590, y, 50, 28); // Highlight border
 					if (mouseIsDown && !pmouseIsDown) {
 						switch (i) {
-							case 0:
-								screenShake = !screenShake;
-								break;
-							case 1:
-								screenFlashes = !screenFlashes;
-								break;
-							case 2:
-								quirksMode = !quirksMode;
-								break;
-							case 3:
-								enableExperimentalFeatures = !enableExperimentalFeatures;
-								break;
-							case 4:
-								frameRateThrottling = !frameRateThrottling;
-								break;
-							case 5:
-								slowTintsEnabled = !slowTintsEnabled;
-								break;
-							case 6:
-								onScreenTimerEnabled = !onScreenTimerEnabled;
-								break;
+							case 0: screenShake = !screenShake; break;
+							case 1: screenFlashes = !screenFlashes; break;
+							case 2: quirksMode = !quirksMode; break;
+							case 3: enableExperimentalFeatures = !enableExperimentalFeatures; break;
+							case 4: frameRateThrottling = !frameRateThrottling; break;
+							case 5: slowTintsEnabled = !slowTintsEnabled; break;
+							case 6: onScreenTimerEnabled = !onScreenTimerEnabled; break;
 						}
 					}
 				}
