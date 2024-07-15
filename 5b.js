@@ -1,4 +1,4 @@
-const version = 'v0.3.3.3'; // putting this up here so I can edit the text on the title screen more easily.
+const version = 'v0.3.3.4'; // putting this up here so I can edit the text on the title screen more easily.
 let canvas;
 let ctx;
 const cwidth = 960;
@@ -2883,7 +2883,7 @@ function drawMenu() {
 	drawMenu0Button('CONTINUE GAME', 665.55, 393.05, levelProgress == 0, menuContGame);
 	if (levelProgress > 6) {
 		drawMenu0Button('LEVEL CREATOR', 665.55, 437.7, false, menuLevelCreator);
-		drawMenu0Button('EXPLORE', 665.55, 482.5, false, menuExplore);
+		drawMenu0Button('EXPLORE', 665.55, 482.5, true, menuExplore);
 	} else {
 		drawMenu0Button('LEVEL CREATOR', 665.55, 437.7, true, menuLevelCreator);
 		drawMenu0Button('EXPLORE', 665.55, 482.5, true, menuExplore);
@@ -5387,10 +5387,6 @@ function setSelectedTile(i) {
 	if (blockProperties[selectedTile][9] && (tool == 2 || tool == 3)) {
 		tool = 1;
 	}
-	// let x = i % 5 * 60 + 30;
-	// let y = Math.floor(i / 5) * 60 + 70;
-	// levelCreator.sideBar.tab4.selector._x = x;
-	// levelCreator.sideBar.tab4.selector._y = y;
 }
 
 function closeToEdgeY() {
@@ -5405,37 +5401,10 @@ function closeToEdgeX() {
 
 function removeLCTiles() {
 	// console.log('removeLCTiles');
-	// osctx3.clearRect(0, 0, osc3.width, osc3.height);
-	// let y = 0;
-	// while(y < levelHeight)
-	// {
-	// 	let x = 0;
-	// 	while(x < levelWidth)
-	// 	{
-	// 		levelCreator.tiles["tileX" + x + "Y" + y].removeMovieClip();
-	// 		x = x + 1;
-	// 	}
-	// 	y = y + 1;
-	// }
 }
 
 function updateLCtiles() {
-	// console.log('updateLCtiles');
-	// scale = getLCGridScale();
 	osctx3.clearRect(0, 0, osc3.width, osc3.height);
-	// let y = 0;
-	// while (y < levelHeight) {
-	// 	let x = 0;
-	// 	while (x < levelWidth) {
-	// 		let tile = myLevel[1][y][x];
-	// 		if (blockProperties[tile][16] == 1) {
-	// 			//
-	// 		}
-	// 		// levelCreator.tiles["tileX" + x + "Y" + y].gotoAndStop(myLevel[1][y][x] + 1);
-	// 		x = x + 1;
-	// 	}
-	// 	y = y + 1;
-	// }
 
 	let tintBlocks = [33, 34, 53, 54, 61, 62, 64, 82, 134];
 	let tintBlockOneWay = [false, false, false, false, false, false, true, true, true];
@@ -5520,19 +5489,16 @@ function updateLCtiles() {
 }
 
 function setTool(i) {
-	// levelCreator.tools["tool" + tool].gotoAndStop(2);
 	if (tool == 2 || tool == 5) {
 		clearRectSelect();
 		if (tool == i && tool == 5) copied = false;
 	}
 	tool = i;
-	// levelCreator.tools["tool" + tool].gotoAndStop(1);
 }
 
 function setEndGateLights() {
-	// levelCreator.sideBar.tab4.tiles.tile6.light.gotoAndStop(charCount + 1);
 	if (LCEndGateX >= 0) {
-		// levelCreator.tiles["tileX" + LCEndGateX + "Y" + LCEndGateY].light.gotoAndStop(charCount + 1);
+		console.log("Thing");
 	}
 }
 
@@ -5897,9 +5863,6 @@ function drawLCDiaInfo(i, y) {
 	myLevelDialogue[1][i].linecount = diaTextBox[1].length;
 	ctx.fillText(myLevelDialogue[1][i].face == 2 ? 'H' : 'S', 665 + diaInfoHeight * 2 + 5, y);
 	ctx.fillText(myLevelDialogue[1][i].char.toString().padStart(2, '0'), 665 + 5, y);
-	// ctx.fillText(charStateNamesShort[myLevelChars[1][i][3]], (665+240)-diaInfoHeight*1.5 + 5, y + diaInfoHeight/2);
-
-	//myLevelDialogue[1][diaDropdown].face
 	if (
 		mouseOnTabWindow &&
 		!lcPopUp &&
@@ -5938,7 +5901,6 @@ function drawLCDiaInfo(i, y) {
 		} else {
 			ctx.fillStyle = '#ee3333';
 			drawRemoveButton(665 + 240, y + (diaInfoHeight * myLevelDialogue[1][i].linecount) / 2 - 10, 20, 3);
-			// ctx.fillRect(665+240, y + (diaInfoHeight*myLevelDialogue[1][i].linecount)/2 - 10, 20, 20);
 			if (onRect(_xmouse,_ymouse,665,y,diaInfoHeight * 2,diaInfoHeight * myLevelDialogue[1][i].linecount)) {
 				onButton = true;
 				hoverText = 'Character';
@@ -7046,18 +7008,8 @@ function exploreDrawThumbTile(context, x, y, tile, scale) {
 		}
 	} else if (tile == 6) {
 		// Door
-		// let bgid = playMode==2?selectedBg:bgs[currentLevel];
-		// context.fillStyle = bgid==9||bgid==10?'#999999':'#505050';
 		context.fillStyle = '#505050';
 		context.fillRect((x - 1) * 30, (y - 3) * 30, 60, 120);
-		// for (let i = 0; i < charCount2; i++) {
-		// 	context.fillStyle = 'rgb(' + mapRange(doorLightFade[i], 0, 1, 40, 0) + ',' + mapRange(doorLightFade[i], 0, 1, 40, 255) + ',' + mapRange(doorLightFade[i], 0, 1, 40, 0) + ')';
-		// 	context.fillRect((x-1)*30+doorLightX[Math.floor(i/6)==Math.floor((charCount2-1)/6)?(charCount2-1)%6:5][i%6], y*30-80 + Math.floor(i/6)*10, 5, 5);
-		// 	if (doorLightFadeDire[i] != 0) {
-		// 		doorLightFade[i] = Math.max(Math.min(doorLightFade[i]+doorLightFadeDire[i]*0.0625, 1), 0);
-		// 		if (doorLightFade[i] == 1 || doorLightFade[i] == 0) doorLightFadeDire[i] = 0;
-		// 	}
-		// }
 	}
 }
 
@@ -7548,14 +7500,6 @@ function draw() {
 			break;
 
 		case 3:
-			// TODO: Look into if it would be more accurate to the Flash version if this were moved to after the game logic.
-			// ctx.drawImage(
-			// 	osc4,
-			// 	-Math.floor((Math.max(cameraX, 0) + shakeX) / 1.5 + (cameraX < 0 ? cameraX / 3 : 0)),
-			// 	-Math.floor((Math.max(cameraY, 0) + shakeY) / 1.5 + (cameraY < 0 ? cameraY / 3 : 0)),
-			// 	osc4.width / pixelRatio,
-			// 	osc4.height / pixelRatio
-			// );
 			ctx.drawImage(
 				osc4,
 				-Math.floor(-cameraX + shakeX) + Math.floor( (-cameraX+shakeX)/3),
@@ -10247,11 +10191,6 @@ function logInExplore() {
 	// Get access_token once finished
 	newWindow.addEventListener('close', refreshToken);
 }
-
-/*function logInExploreAfter() {
-	getCurrentExploreUserID();
-	refreshToken();
-}*/
 
 function logOutExplore() {
 	loggedInExploreUser5beamID = -1;
