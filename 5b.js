@@ -1,4 +1,4 @@
-const version = 'v0.3.3.5'; // putting this up here so I can edit the text on the title screen more easily.
+const version = 'v0.3.3.6'; // putting this up here so I can edit the text on the title screen more easily.
 let canvas;
 let ctx;
 const cwidth = 960;
@@ -9678,8 +9678,8 @@ function draw() {
 			ctx.textBaseline = 'top';
 			ctx.textAlign = 'left';
 			ctx.fillStyle = '#ffffff';
-			ctx.font = 'bold 36px Helvetica';
-			drawTextWithShadow("OPTIONS", 10, 60, '#ffffff', 36);
+			ctx.font = 'bold 48px Helvetica';
+			drawTextWithShadow("OPTIONS", 10, 60, '#ffffff', 48);
 
 			// Options menu background with gradient
 			let gradient = ctx.createLinearGradient(0, 0, 0, cheight);
@@ -9689,13 +9689,16 @@ function draw() {
 			ctx.fillRect(0, 0, cwidth, cheight);
 
 			// Draw options
-			ctx.textBaseline = 'top';
+			ctx.textBaseline = 'middle';
 			ctx.font = '26px Helvetica';
 			for (var i = 0; i < optionText.length; i++) {
 				let y = i * 50 + 150;
-				
-				// Option rectangle with border
-				ctx.fillStyle = '#444444';
+
+				// Option rectangle with gradient and border
+				let optionGradient = ctx.createLinearGradient(590, y, 640, y + 28);
+				optionGradient.addColorStop(0, '#555555');
+				optionGradient.addColorStop(1, '#333333');
+				ctx.fillStyle = optionGradient;
 				ctx.fillRect(590, y, 50, 28);
 				ctx.strokeStyle = '#ffffff';
 				ctx.lineWidth = 2;
@@ -9704,7 +9707,7 @@ function draw() {
 				// Option text
 				ctx.fillStyle = '#ffffff';
 				ctx.textAlign = 'right';
-				drawTextWithShadow(optionText[i], 580, y + 2, '#ffffff', 26);
+				drawTextWithShadow(optionText[i], 580, y + 14, '#ffffff', 26);
 
 				// Option value
 				ctx.textAlign = 'center';
@@ -9719,13 +9722,17 @@ function draw() {
 					case 6: thisOptionValue = onScreenTimerEnabled; break;
 				}
 				ctx.fillStyle = thisOptionValue ? '#00ff00' : '#ff0000';
-				drawTextWithShadow(thisOptionValue ? 'on' : 'off', 615, y + 2, thisOptionValue ? '#00ff00' : '#ff0000', 26);
+				drawTextWithShadow(thisOptionValue ? 'on' : 'off', 615, y + 14, thisOptionValue ? '#00ff00' : '#ff0000', 26);
 
 				// Highlight option on hover
 				if (onRect(_xmouse, _ymouse, 590, y, 50, 28)) {
 					onButton = true;
 					ctx.strokeStyle = '#ffff00';
+					ctx.lineWidth = 3;
+					ctx.shadowColor = 'rgba(255, 255, 0, 0.5)';
+					ctx.shadowBlur = 10;
 					ctx.strokeRect(590, y, 50, 28); // Highlight border
+					ctx.shadowBlur = 0;
 					if (mouseIsDown && !pmouseIsDown) {
 						switch (i) {
 							case 0: screenShake = !screenShake; break;
@@ -10653,7 +10660,6 @@ function deselectAllTextBoxes() {
 	canvas.setAttribute('contenteditable', false);
 }
 
-// Refresh token if we can
 if (getCookie('refresh_token') !== '') {
 	refreshToken();
 }
