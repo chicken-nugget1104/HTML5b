@@ -1,4 +1,4 @@
-const version = 'v0.3.3.6'; // putting this up here so I can edit the text on the title screen more easily.
+const version = 'v0.3.3.7'; // putting this up here so I can edit the text on the title screen more easily.
 let canvas;
 let ctx;
 const cwidth = 960;
@@ -2547,21 +2547,6 @@ function playExploreLevel(continueGame=false) {
 function continueExploreLevelpack() {
 	playExploreLevel(true);
 }
-
-// function decodeCoinBin(coinBin) {
-// 	gotCoin = new Array(levelCount);
-// 	for (let i = 0; i < levelCount; i++) {
-// 		gotCoin[i] = (coinBin >> i) & 1 == 1;
-// 	}
-// }
-
-// function encodeCoinBin() {
-// 	let coinBin = 0;
-// 	for (let i = 0; i < gotCoin.length; i++) {
-// 		if (gotCoin[i]) coinBin += 1 << i;
-// 	}
-// 	return coinBin;
-// }
 
 function playSavedLevelpack() {
 	// It probably would've been better to modify the levelpack loader than to accommodate it like this.
